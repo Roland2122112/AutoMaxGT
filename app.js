@@ -189,7 +189,7 @@ window.onload = function () {
     // ===== CARRITO =====
     function agregarAlCarrito(id) {
         if (!usuarioLogueado) {
-            alert("Debes iniciar sesión como alumnoy / 2025 para agregar.");
+            alert("Debes iniciar sesión como alumno / 2025 para agregar.");
             return;
         }
         var auto = null;
@@ -372,4 +372,5 @@ window.onload = function () {
             toast.style.display = "none";
         }, 2500);
     }
+
 };
