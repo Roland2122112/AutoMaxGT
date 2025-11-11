@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoMax GT - Venta de carros</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>AutoMax GT</h1>
+    <nav>
+        <a href="#catalogo">Catálogo</a>
+        <a href="#video">Video</a>
+        <button id="btnVerCarrito" class="btn" disabled>Ver carrito (0)</button>
+    </nav>
+</header>
+
+<section id="inicio" class="hero">
+    <div class="hero-content">
+        <h2>Concesionario en línea</h2>
+        <p>Inicia sesión para ver y comprar vehículos.</p>
+        <button class="btn" onclick="abrirOverlay()">Entrar</button>
+    </div>
+</section>
+
+<div class="contenedor">
+
+    <!-- FILTROS -->
+    <div id="filtros" class="filtros">
+        <input type="text" id="txtBuscar" placeholder="Buscar por nombre...">
+        <select id="selTipo">
+            <option value="todos">Todos</option>
+            <option value="Deportivo">Deportivo</option>
+            <option value="SUV">SUV</option>
+            <option value="Sedán">Sedán</option>
+            <option value="Pickup">Pickup</option>
+        </select>
+    </div>
+
+    <!-- CATÁLOGO -->
+    <h2 id="catalogo" class="section-title">Catálogo de vehículos</h2>
+    <p id="avisoBloqueo" class="msg" style="display:none;">Debes iniciar sesión para ver el catálogo.</p>
+    <div class="autos-grid" id="listaAutos">
+        <!-- Se llena desde JS -->
+    </div>
+
+    <!-- VIDEO -->
+    <div id="video" class="video-box">
+        <h3>Video de presentación</h3>
+        <p>Nuestra concesionaria</p>
+        <iframe src="Video/Carros.mp4" allowfullscreen></iframe>
+    </div>
+
+</div>
+
+<!-- OVERLAY LOGIN/REGISTRO -->
+<div id="overlayAuth">
+    <div class="auth-box">
+        <div class="tabs">
+            <button id="tabRegistro" class="tab active">Registro</button>
+            <button id="tabLogin" class="tab">Iniciar sesión</button>
+        </div>
+
+        <form id="formRegistro" class="auth-form">
+            <h3>Registro de usuario</h3>
+            <label>Nombre completo</label>
+            <input type="text" id="nombre" required>
+            <label>Correo</label>
+            <input type="email" id="correo" required>
+            <label>Dirección</label>
+            <input type="text" id="direccion" placeholder="Ciudad, zona, referencia">
+            <label>Tipo de auto de interés</label>
+            <select id="preferencia">
+                <option>SUV</option>
+                <option>Sedán</option>
+                <option>Pickup</option>
+                <option selected>Deportivo</option>
+            </select>
+            <p class="note">Solo es un registro de ejemplo.</p>
+            <button class="btn" type="submit">Guardar</button>
+            <small id="registroMsg" class="msg success"></small>
+        </form>
+
+        <form id="formLogin" class="auth-form hidden">
+            <h3>Iniciar sesión</h3>
+            <label for="user">Usuario</label>
+            <input type="text" id="user" placeholder="alumnoy" required>
+            <label for="pass">Contraseña</label>
+            <input type="password" id="pass" placeholder="2025" required>
+            <button class="btn" type="submit">Entrar</button>
+            <small id="loginMsg" class="msg"></small>
+            <p class="note">Usuario de prueba: <b>alumnoy</b> / <b>2025</b></p>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL DEL CARRITO -->
+<div id="modalCarrito">
+    <div class="contenido">
+        <h3>Detalle de la compra</h3>
+        <div id="carritoContenido"></div>
+
+        <h4>Forma de pago</h4>
+        <label><input type="radio" name="pago" value="Tarjeta" checked> Tarjeta de crédito/débito</label><br>
+        <label><input type="radio" name="pago" value="Transferencia"> Transferencia</label><br>
+        <label><input type="radio" name="pago" value="Efectivo"> Efectivo al recibir</label>
+
+        <div id="datosTarjeta" style="margin-top:10px;">
+            <label>Número de tarjeta</label>
+            <input type="text" id="numTarjeta" placeholder="0000 0000 0000 0000">
+            <label>Fecha vencimiento</label>
+            <input type="text" id="fechaTarjeta" placeholder="MM/AA">
+            <label>CVV</label>
+            <input type="text" id="cvvTarjeta" placeholder="123">
+        </div>
+
+        <h4 style="margin-top:10px;">¿Requiere factura?</h4>
+        <label><input type="checkbox" id="chkFactura"> Sí, deseo factura</label>
+
+        <h4 style="margin-top:10px;">Observaciones</h4>
+        <textarea id="txtObs" placeholder="Ej: entregar por la mañana, llamar antes, etc."></textarea>
+
+        <p class="total" id="totalCompra">Total: Q0.00</p>
+
+        <button class="btn" onclick="finalizarCompra()">Finalizar compra</button>
+        <button class="btn" onclick="vaciarCarrito()" style="background:#475569;margin-left:5px;">Vaciar carrito</button>
+        <button class="btn btn-danger" onclick="cerrarCarrito()">Cerrar</button>
+
+        <p id="mensajeFinal" class="msg success" style="margin-top:10px;"></p>
+    </div>
+</div>
+
+<!-- MODAL DETALLES DEL VEHÍCULO -->
+<div id="modalDetalles" style="display:none;">
+    <div class="contenido-detalles">
+        <h3 id="detNombre">Detalle del vehículo</h3>
+        <div id="detGrid" class="det-grid">
+            <!-- se llena desde JS -->
+        </div>
+        <button class="btn" onclick="cerrarDetalles()">Cerrar</button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<footer>
+    Rolando Juarez, Ingenieria en Sistemas
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
